@@ -71,6 +71,8 @@ def __mnemonic_join24(args=None):
 
     except Exception as e:
         print(e)
+        print()
+        parser.print_usage()
         exit(-1)
 
 
