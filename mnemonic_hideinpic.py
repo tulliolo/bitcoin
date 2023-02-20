@@ -48,9 +48,9 @@ def __mnemonic_hideinpic(args=None):
     )
     parser.add_argument(
         "-e", "--encryption", action="store", default="0",
-        help="encrypt the mnemonic with different algorithms (default = NONE)\n"
+        help="encrypt the mnemonic with different algorithms\n"
              "supported algorithms are:\n"
-             "0) NONE: no encryption applied (DEFAULT)\n"
+             "0) NONE (DEFAULT): no encryption applied\n"
              "1) NEGATIVE: invert all bits\n"
              "2) REVERSAL: swap all bits\n"
              "3) PASSWORD: protect with a password")

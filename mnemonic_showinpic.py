@@ -41,9 +41,9 @@ def __mnemonic_showinpic(args=None):
     )
     parser.add_argument(
         "-e", "--encryption", action="store", default="0",
-        help="decrypt the mnemonic with different algorithms (default = NONE)\n"
+        help="decrypt the mnemonic with different algorithms\n"
              "supported algorithms are:\n"
-             "0) NONE: no decryption applied (DEFAULT)\n"
+             "0) NONE (DEFAULT): no decryption applied\n"
              "1) NEGATIVE: invert all bits\n"
              "2) REVERSAL: swap all bits\n"
              "3) PASSWORD: decrypt with a password")
