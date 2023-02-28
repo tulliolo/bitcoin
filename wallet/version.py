@@ -77,7 +77,7 @@ class NetworkId(enum.Enum):
     TESTNET = 'testnet'
 
 
-class AddressTypeId(enum.Enum):
+class AddressType(enum.Enum):
     """
     ID of the supported address type (p2sh, p2sh_p2wpkh, p2wpkh)
     """
@@ -86,7 +86,7 @@ class AddressTypeId(enum.Enum):
     P2WPKH = DEFAULT = 'p2wpkh'
 
 
-class KeyTypeId(enum.Enum):
+class KeyType(enum.Enum):
     """
     ID of the supported key type (pubkey or prvkey)
     """
@@ -94,18 +94,18 @@ class KeyTypeId(enum.Enum):
     PRVKEY = 'prvkey'
 
 
-def find_by_version(value: int) -> tuple[NetworkId, AddressTypeId, KeyTypeId]:
+def find_by_version(value: int) -> tuple[NetworkId, AddressType, KeyType]:
     """
-    Find network_id, addresstype_id and keytype_id for a supported version value.\n
+    Find network_id, address_type and key_type for a supported version value.\n
     :param value: a public or a private key version value
-    :return: network_id, addresstype_id and keytype_id supporting the value, or none if not found
+    :return: network_id, address_type and key_type supporting the value, or none if not found
     """
     result = [
-        (NetworkId(network_id), AddressTypeId(addresstype_id), KeyTypeId(keytype_id))
+        (NetworkId(network_id), AddressType(address_type), KeyType(key_type))
         for network_id in __SUPPORTED_VERSIONS.keys()
-        for addresstype_id in __SUPPORTED_VERSIONS[network_id].keys()
-        for keytype_id in __SUPPORTED_VERSIONS[network_id][addresstype_id].keys()
-        if value == __SUPPORTED_VERSIONS[network_id][addresstype_id][keytype_id]
+        for address_type in __SUPPORTED_VERSIONS[network_id].keys()
+        for key_type in __SUPPORTED_VERSIONS[network_id][address_type].keys()
+        if value == __SUPPORTED_VERSIONS[network_id][address_type][key_type]
     ]
 
     return result[0] if result else None
@@ -113,37 +113,37 @@ def find_by_version(value: int) -> tuple[NetworkId, AddressTypeId, KeyTypeId]:
 
 def find_by_path(value):
     """
-    Find network_id and addresstype_id for a supported default path value.\n
+    Find network_id and address_type for a supported default path value.\n
     :param value: a default path value
-    :return: network_id and addresstype_id supporting the value, or none if not found
+    :return: network_id and address_type supporting the value, or none if not found
     """
     result = [
-        (NetworkId(network_id), AddressTypeId(addresstype_id))
+        (NetworkId(network_id), AddressType(address_type))
         for network_id in __SUPPORTED_VERSIONS.keys()
-        for addresstype_id in __SUPPORTED_VERSIONS[network_id].keys()
-        if value == __SUPPORTED_VERSIONS[network_id][addresstype_id]['path']
+        for address_type in __SUPPORTED_VERSIONS[network_id].keys()
+        if value == __SUPPORTED_VERSIONS[network_id][address_type]['path']
     ]
 
     return result[0] if result else None
 
 
-def get_path(network_id: NetworkId, addresstype_id: AddressTypeId) -> str:
+def get_path(network_id: NetworkId, address_type: AddressType) -> str:
     """
-    Get the default path for network_id and addresstype_id (e.g. m/84h/0h for mainnet p2wpkh).\n
+    Get the default path for network_id and address_type (e.g. m/84h/0h for mainnet p2wpkh).\n
     :param network_id: network id (e.g mainnet)
-    :param addresstype_id: address type id (e.g. p2wpkh)
+    :param address_type: address type id (e.g. p2wpkh)
     :return: the default path value
     """
-    return __SUPPORTED_VERSIONS[network_id.value][addresstype_id.value]['path']
+    return __SUPPORTED_VERSIONS[network_id.value][address_type.value]['path']
 
 
-def get_version(network_id: NetworkId, addresstype_id: AddressTypeId, keytype_id: KeyTypeId) -> int:
+def get_version(network_id: NetworkId, address_type: AddressType, key_type: KeyType) -> int:
     """
-    Get the key version value for network_id, addresstype_id and keytype_id
+    Get the key version value for network_id, address_type and keytype_id
     (e.g. '04b24746' for mainnet, p2wpkh, pubkey)\n
     :param network_id: network id (e.g mainnet)
-    :param addresstype_id: address type id (e.g. p2wpkh)
-    :param keytype_id: key type id (e.g. pubkey)
+    :param address_type: address type id (e.g. p2wpkh)
+    :param key_type: key type id (e.g. pubkey)
     :return: the public or private key version value
     """
-    return __SUPPORTED_VERSIONS[network_id.value][addresstype_id.value][keytype_id.value]
+    return __SUPPORTED_VERSIONS[network_id.value][address_type.value][key_type.value]
