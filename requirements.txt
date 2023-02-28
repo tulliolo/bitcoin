@@ -1,2 +1,2 @@
 Pillow~=9.4.0
-cryptography~=39.0.0
+cryptography~=39.0.1
