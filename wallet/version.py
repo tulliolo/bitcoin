@@ -131,7 +131,7 @@ def get_path(network_id: NetworkId, address_type: AddressType) -> str:
     """
     Get the default path for network_id and address_type (e.g. m/84h/0h for mainnet p2wpkh).\n
     :param network_id: network id (e.g mainnet)
-    :param address_type: address type id (e.g. p2wpkh)
+    :param address_type: address type (e.g. p2wpkh)
     :return: the default path value
     """
     return __SUPPORTED_VERSIONS[network_id.value][address_type.value]['path']
@@ -142,8 +142,8 @@ def get_version(network_id: NetworkId, address_type: AddressType, key_type: KeyT
     Get the key version value for network_id, address_type and keytype_id
     (e.g. '04b24746' for mainnet, p2wpkh, pubkey)\n
     :param network_id: network id (e.g mainnet)
-    :param address_type: address type id (e.g. p2wpkh)
-    :param key_type: key type id (e.g. pubkey)
+    :param address_type: address type (e.g. p2wpkh)
+    :param key_type: key type (e.g. pubkey)
     :return: the public or private key version value
     """
     return __SUPPORTED_VERSIONS[network_id.value][address_type.value][key_type.value]
