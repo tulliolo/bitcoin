@@ -44,7 +44,7 @@ class Node:
             self, create_key,
             network_id: version.NetworkId, address_type: version.AddressType,
             prvkey: bytes | None, pubkey: bytes | None, chacod: bytes,
-            depth: int = 0, index: int = 0,
+            depth: int = 0, index: int = 0, path: str = "m",
             parent_fingerprint: bytes = bytes(4),
     ):
         assert create_key == Node.__create_key, \
@@ -61,6 +61,8 @@ class Node:
 
         self.__depth = depth
         self.__index = index
+
+        self.__path = path
 
         self.__parent_fingerprint = parent_fingerprint
 
@@ -103,6 +105,14 @@ class Node:
         )
 
     @property
+    def path(self) -> str:
+        """
+        The node path
+        :return:
+        """
+        return self.__path
+
+    @property
     def xprvkey(self) -> str:
         """
         The extended private key
@@ -117,3 +127,17 @@ class Node:
         :return:
         """
         return base58.b58encode_check(self.__serialize(version.KeyType.PUBKEY)).decode()
+
+    @property
+    def info(self) -> dict:
+        """
+        The node information
+        :return:
+        """
+        return {
+            "path": self.__path,
+            "cansign": True if self.__prvkey else False,
+            "xpubkey": self.xpubkey,
+            "network": self.__network_id,
+            "version": self.__address_type
+        }
